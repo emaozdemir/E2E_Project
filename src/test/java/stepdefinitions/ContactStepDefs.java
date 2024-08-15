@@ -14,7 +14,8 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.patch;
 
 public class ContactStepDefs {
-    ContactPojo payload;
+
+    ContactPojo payload;//class seviyesinde tanımlarız clasta istedigimiz yerde kullanmak icin
     Response response;
 
     @Given("set the url for adding contact")
