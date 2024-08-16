@@ -8,7 +8,8 @@ import utilities.Driver;
 public class ContactListHomePage {
 
     public ContactListHomePage(){
-        PageFactory.initElements(Driver.getDriver(), this);
+        PageFactory.initElements(Driver.getDriver(), this);//ya pagefaktori form yada fluent form kullanırız
+        //PageFactory gidiyor asağıdaki elementleri initial ediyor driverimi onlarla etkileşim kuracak hale getiriyor
     }
 
     @FindBy(id = "email")
