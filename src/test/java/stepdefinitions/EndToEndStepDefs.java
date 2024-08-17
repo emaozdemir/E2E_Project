@@ -41,7 +41,9 @@ public class EndToEndStepDefs {
         homePage.signup.click();
 
     }
+
     Faker faker;
+
     @And("User enters firstname, lastname, email, password")
     public void userEntersFirstnameLastnameEmailPassword() {
         faker = new Faker();
@@ -70,35 +72,41 @@ public class EndToEndStepDefs {
 
     @Then("verify the user via API request")
     public void verifyTheUserViaAPIRequest() {
-        spec.pathParams("first","users"
-                ,"second","me");
+        spec.pathParams("first", "users"
+                , "second", "me");
 
-        ContactUserPojo expectedData = new ContactUserPojo(firstName,lastName,null,null,email);
+        ContactUserPojo expectedData = new ContactUserPojo(firstName, lastName, null, null, email);
         System.out.println("expectedData = " + expectedData);
         Response response = given(spec).when().get("{first}/{second}");
         response.prettyPrint();
 
         ContactUserPojo actualData = ObjectMapperUtils.convertJsonStrToJava(response.asString(), ContactUserPojo.class);
 
-        Assert.assertEquals(200,response.statusCode());
-        Assert.assertEquals(expectedData.getFirstName(),actualData.getFirstName());
-        Assert.assertEquals(expectedData.getLastName(),actualData.getLastName());
-        Assert.assertEquals(expectedData.getEmail(),actualData.getEmail());
+        Assert.assertEquals(200, response.statusCode());
+        Assert.assertEquals(expectedData.getFirstName(), actualData.getFirstName());
+        Assert.assertEquals(expectedData.getLastName(), actualData.getLastName());
+        Assert.assertEquals(expectedData.getEmail(), actualData.getEmail());
     }
 
     @Given("set the url for update")
     public void setTheUrlForUpdate() {
-        spec.pathParams("first","users"
-                ,"second","me");
+        spec.pathParams("first", "users"
+                , "second", "me");
 
     }
+
     @And("set the expected data for update")
     public void setTheExpectedDataForUpdate() {
         System.out.println("email = " + email);
         faker = new Faker();
-        email= faker.internet().emailAddress();
+        email = faker.internet().emailAddress();
         System.out.println("email = " + email);
-        payload = new UpdateUserPojo("Tarıq","Any","Tester.14",email);
+        payload = new UpdateUserPojo("Tarıq", "Any", "Tester.14", email);
+
+//        firstName = faker.name().firstName(); //
+//        lastName = faker.name().lastName();
+//        email = faker.internet().emailAddress();
+//        payload = new UpdateUserPojo(firstName, lastName, "Tester.14", email);
     }
 
     @When("send the patch request for update")
@@ -111,18 +119,20 @@ public class EndToEndStepDefs {
     public void doAssertionForUpdate() {
         ContactUserPojo actualData = ObjectMapperUtils.convertJsonStrToJava(response.asString(), ContactUserPojo.class);
 
-        Assert.assertEquals(200,response.statusCode());
-        Assert.assertEquals(payload.getFirstName(),actualData.getFirstName());
-        Assert.assertEquals(payload.getLastName(),actualData.getLastName());
-        Assert.assertEquals(payload.getEmail(),actualData.getEmail());
+        Assert.assertEquals(200, response.statusCode());
+        Assert.assertEquals(payload.getFirstName(), actualData.getFirstName());
+        Assert.assertEquals(payload.getLastName(), actualData.getLastName());
+        Assert.assertEquals(payload.getEmail(), actualData.getEmail());
     }
 
     @Given("set the url for delete")
     public void setTheUrlForDelete() {
-        spec.pathParams("first","users"
-                ,"second","me");
+        spec.pathParams("first", "users"
+                , "second", "me");
     }
+
     Response responseDelete;
+
     @When("send the delete request")
     public void sendTheDeleteRequest() {
         responseDelete = given(spec).when().delete("{first}/{second}");

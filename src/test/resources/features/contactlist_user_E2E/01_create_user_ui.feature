@@ -8,3 +8,4 @@ Feature: Create User
     And user clicks on submit button
     And user closes browser
     Then verify the user via API request
+#    sadece en sonraki apı testi o yuzden static blokta spec ihtiyac olunca kullanıcaz
