@@ -8,7 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static stepdefinitions.BookStoreStepDefs.username;
 import static stepdefinitions.EndToEndStepDefs.email;
+
 
 public class Authentication {
 
@@ -33,6 +35,27 @@ public class Authentication {
                 contentType(ContentType.JSON).
                 post("https://thinking-tester-contact-list.herokuapp.com/users/login");
         return response.jsonPath().getString("token");
+    }
+
+    public static String generateTokenBS(){
+
+        pojos.BookStorePojos.UsernamePassword usernamePassword = new pojos.BookStorePojos.UsernamePassword();
+        if (username==null){
+            usernamePassword.setUserName("Ona63");
+            usernamePassword.setPassword("Clarusway@2024");
+        }else {
+            usernamePassword.setUserName(username);
+            usernamePassword.setPassword("Clarusway@2024");
+        }
+
+        Response response = RestAssured.given().contentType(ContentType.JSON).body(usernamePassword).post("https://bookstore.demoqa.com/Account/v1/GenerateToken");
+
+        return response.jsonPath().getString("token");
+
+    }
+
+    public static void main(String[] args) {
+        generateTokenBS();
     }
 
 
